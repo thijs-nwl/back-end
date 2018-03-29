@@ -1,0 +1,16 @@
+doctype html
+html
+   head
+      title ethScan
+   body
+      form(action = "/", method = "POST")
+         div
+            input(name="pubkey" type="text" required placeholder="Public key")
+         br
+         br
+
+         button(type = "submit") Submit
+         br
+         h1 balance:
+         p=ether
+         p=bankAcount

@@ -1,0 +1,15 @@
+{
+  "name": "templating",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "*",
+    "pug": "^2.0.0-beta11"
+  },
+  "author": "thijs",
+  "license": "ISC"
+}

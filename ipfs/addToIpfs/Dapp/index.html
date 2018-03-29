@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>The Basics</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://unpkg.com/ipfs/dist/index.js"></script>
+    <script type="text/javascript">
+      const node = new Ipfs({ repo: 'ipfs-' + Math.random() })
+      node.once('ready', () => {
+        console.log('Online status: ', node.isOnline() ? 'online' : 'offline')
+        document.getElementById("status").innerHTML= 'IPFS Node status: ' + (node.isOnline() ? 'online' : 'offline')
+      })
+  </script>
+  </head>
+  <body>
+    <h1>Add To IPFS</h1>
+    <h2 id="status"></h2>
+    <h2 id="MM"></h2>
+    <form>
+        <button type="button" id="_1" name="button">Write</button>
+        <input  type="text" id="input_1" name="setVal" placeholder="first name" value="">
+        <input  type="text" id="input_2" name="setVal" placeholder="last name" value="">
+        <input  type="text" id="input_3" name="setVal" placeholder="nationallity" value="">
+    </form>
+    <form >
+      <button type="button" id="_2" name="button">Read</button>
+      <input  type="text" id="input_hash" name="setVal" placeholder="index" value="">
+    </form>
+    <div id="hashes">
+      <h2>hashes</h2>
+    </div>
+
+    <div id="res">
+      <h2>responses</h2>
+    </div>
+  </body>
+  <script type="text/javascript">
+  window.addEventListener('load', () => {
+    if (typeof web3 !== 'undefined') {
+      window.web3 = new Web3(web3.currentProvider);
+    } else {
+      document.getElementById("MM").innerHTML = "No web3? You should consider trying MetaMask!"
+    }
+  });
+
+  var btn1 = document.getElementById('_1'),
+      btn2 = document.getElementById('_2'),
+      divHash = document.getElementById("hashes"),
+      divRes = document.getElementById("res"),
+      obj,
+      json,
+      hashes = [],
+      onIndex,
+      responses = [];
+
+    btn1.addEventListener('click', () => {
+      obj = {
+        fName: document.getElementById('input_1').value,
+        lName: document.getElementById('input_2').value,
+        Nationallity: document.getElementById('input_3').value,
+        address: web3.eth.defaultAccount
+      }
+      json = JSON.stringify(obj);
+
+      node.files.add(new node.types.Buffer(json), function (err, res){
+        if(err || !res) return console.log('ipfs add() error', err, res);
+        hashes.push(res);
+        divHash.innerHTML = "";
+        for (var i = 0; i < hashes.length; i++) {
+          divHash.innerHTML += i + ": " + hashes[i][0].hash + ", ";
+        }
+      })
+    });
+
+    btn2.addEventListener('click', () => {
+      onIndex = document.getElementById('input_hash').value;
+      node.files.cat(hashes[onIndex][0].hash, function(err, res){
+        if(err || !res) return console.log("ipfs cat() error", err, res);
+        responses.push(res);
+        divRes.innerHTML = res.toString();
+      })
+    });
+  </script>
+</html>

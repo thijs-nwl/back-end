@@ -1,0 +1,16 @@
+{
+  "name": "ethwalletcheck",
+  "version": "1.0.0",
+  "description": "cheking eth balance",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "thijs",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "multer": "^1.3.0",
+    "pug": "^2.0.0-rc.2"
+  }
+}
